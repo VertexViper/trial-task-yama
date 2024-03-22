@@ -15,7 +15,13 @@ datasource db {
 
 model User {
   id               Int               @id @default(autoincrement())
-  email            String?           @unique @db.VarChar(255)
+  email            String            @unique @db.VarChar(255)
   password         String            @default("") @db.VarChar(255)
   wallet           String?           @unique @db.VarChar(255)
+  createdAt        DateTime          @default(now())
+  
+  @@index([email], name: "idx_email")
+  @@index([wallet], name: "idx_wallet")
+
+  @@map("users")
 }
