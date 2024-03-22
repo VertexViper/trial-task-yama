@@ -3,19 +3,18 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import NextAuth, { AuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { comparedPassword } from "@/utils/hashPassword"
-// Authorization function for crypto login
+
 async function authorizeCredentials(
-    credentials:any, req:any
+    credentials: Record<"email" | "password", string> | undefined
 ) {
     if (!credentials) return null;
     console.log(credentials)
     const { email, password } = credentials;
 
-    // Get user from database with their generated nonce
     const user = await prisma.user.findUnique({
         where: { email },
     });
-    if( user && await comparedPassword(password, user.password)){
+    if (user && await comparedPassword(password, user.password)) {
         return {
             id: Number(user?.id) as unknown as string,
             email: user?.email,
@@ -25,9 +24,10 @@ async function authorizeCredentials(
     return null
 }
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
     pages: {
         signIn: "/auth/signin",
+        error: "/auth/signin",
     },
     providers: [
         Credentials({
@@ -48,7 +48,7 @@ export const authOptions: AuthOptions = {
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id as string
-                token.walletAddress = (user as any).wallet
+                token.email = user.email
             }
             return token
         },
