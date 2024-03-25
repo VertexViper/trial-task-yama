@@ -25,10 +25,6 @@ async function authorizeCredentials(
 }
 
 const authOptions: AuthOptions = {
-    pages: {
-        signIn: "/auth/signin",
-        error: "/auth/signin",
-    },
     providers: [
         Credentials({
             name: "Credentials",
@@ -56,7 +52,7 @@ const authOptions: AuthOptions = {
             session.user = {
                 ...session.user,
                 id: token.id as number,
-                email: String(token.email),
+                email: token.email as string,
             }
             return session
         },
