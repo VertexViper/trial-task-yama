@@ -50,7 +50,7 @@ const SignUp = () => {
         })
         if (res.data.success) {
             console.log(res.data.message)
-            route.push('/portfolio')
+            route.push('/auth/signin')
         }
         setLoading(false)
     }

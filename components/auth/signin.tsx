@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Separator } from "@/components/ui/separator"
 import { signIn } from "next-auth/react"
+import { useRouter } from 'next/navigation'
+import { useToast } from "@/components/ui/use-toast"
 
 const validation = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required"),
@@ -31,17 +33,29 @@ const SignIn = () => {
     } = useForm({
         resolver: yupResolver(validation),
     });
+    const router = useRouter()
+    const { toast } = useToast()
     const [loading, setLoading] = useState(false);
     const onSubmit = async (data: any) => {
         setLoading(true);
-        console.log(data)
         const result = await signIn("credentials", {
-            callbackUrl: "/portfolio",
+            redirect: false,
             email: data.email,
             password: data.password,
         });
         console.log(result)
-
+        if (result?.ok) {
+            router.push('/portfolio')
+            toast({
+                title: "Authentication: Success",
+                description: "Signed in successfully",
+              })
+        }else{
+            toast({
+                title: "Authentication: Failed",
+                description: "Email or password is wrong",
+              })
+        }
         setLoading(false);
     };
     return (
@@ -60,7 +74,7 @@ const SignIn = () => {
                         </div>
                         <div className="flex flex-col space-y-2 py-1">
                             <Label htmlFor="password">Password</Label>
-                            <Input id="password" className="text-white bg-gray-800" placeholder="Password" autoComplete="off" {...register("password")} />
+                            <Input type="password" id="password" className="text-white bg-gray-800" placeholder="Password" autoComplete="off" {...register("password")} />
                             {errors.password && (<span className="text-red-500 text-sm">{errors?.password.message}</span>)}
                         </div>
                     </div>

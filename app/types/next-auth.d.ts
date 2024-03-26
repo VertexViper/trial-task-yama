@@ -3,9 +3,9 @@ import NextAuth from "next-auth"
 declare module "next-auth" {
   interface Session {
     user: {
-      id: number
-      email: string
-      wallet: string
-    }
+      id: number;
+      email: string;
+      wallet: string;
+    };
   }
 }

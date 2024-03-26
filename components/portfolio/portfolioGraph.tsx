@@ -1,63 +1,14 @@
 import React from 'react'
 import {
-    AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
-    //Cell, Pie, PieChart 
+    AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer
 } from 'recharts';
-const Home = () => {
-    const data = [
-        {
-            name: 'Page A',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
-        },
-        {
-            name: 'Page B',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
-        },
-        {
-            name: 'Page C',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
-        },
-        {
-            name: 'Page D',
-            uv: 2780,
-            pv: 3908,
-            amt: 2000,
-        },
-        {
-            name: 'Page E',
-            uv: 1890,
-            pv: 4800,
-            amt: 2181,
-        },
-        {
-            name: 'Page F',
-            uv: 2390,
-            pv: 3800,
-            amt: 2500,
-        },
-        {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        },
-    ];
 
-    const data3 = [
-        { name: 'Clicks', value: 20 },
-        { name: 'Impression', value: 80 },
-
-    ];
-    const COLORS = ['#165BAA', '#63ABFD', '#FFBB28', '#FF8042'];
-
+interface PortflioGraphProps {
+    data: Array<any>
+}
+const PortfolioGraph = ({data}:PortflioGraphProps) => {
     return (
-            <div className='p-5 w-[500px] h-[200px]'>
+            <div className='p-2 w-full lg:w-[350px] h-[200px]'>
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                         width={500}
@@ -70,14 +21,14 @@ const Home = () => {
                             bottom: 0,
                         }}
                     >
-                        <XAxis dataKey="name" />
-                        <YAxis />
+                        <XAxis dataKey="name" tickLine={false} tick={{ fontSize: 0 }} />
+                        <YAxis dataKey="uv"tickLine={false} />
                         <Tooltip />
-                        <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+                        <Area type="monotone" dataKey="uv" stroke="#FF0000" fill="#FF000060" />
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
     )
 }
 
-export default Home
+export default PortfolioGraph

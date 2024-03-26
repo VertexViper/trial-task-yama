@@ -27,7 +27,6 @@ import {
 
 interface PortfolioTableProps {
   data: Payment[]
-  isConnected: boolean
 }
 
 export type Payment = {
@@ -55,19 +54,12 @@ export const columns: ColumnDef<Payment>[] = [
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"))
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
-
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="text-right font-medium">{amount}</div>
     },
   },
 ]
 
-const PortfolioTable = ({data, isConnected}:PortfolioTableProps) =>{
+const PortfolioTable = ({data}:PortfolioTableProps) =>{
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -99,13 +91,12 @@ const PortfolioTable = ({data, isConnected}:PortfolioTableProps) =>{
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
+          placeholder="Filter chains..."
           value={(table.getColumn("chain")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("chain")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-          disabled={!isConnected}
         />
       </div>
       <div className="rounded-sm text-white">
@@ -164,7 +155,7 @@ const PortfolioTable = ({data, isConnected}:PortfolioTableProps) =>{
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage() || !isConnected}
+            disabled={!table.getCanPreviousPage()}
           >
             Previous
           </Button>
@@ -172,7 +163,7 @@ const PortfolioTable = ({data, isConnected}:PortfolioTableProps) =>{
             variant="outline"
             size="sm"
             onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage() || !isConnected}
+            disabled={!table.getCanNextPage()}
           >
             Next
           </Button>

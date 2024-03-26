@@ -4,8 +4,14 @@ import axios from 'axios'
 export async function POST(req: NextRequest) {
     try {
         const { wallet, chain } = await req.json();
-        const url = `https://api.mobula.io/api/1/wallet/portfolio?wallet=${wallet}&blockchians=${chain}&cache=true`
-        const response = await axios.get(url, {
+        let url = `https://api.mobula.io/api/1/wallet/portfolio?wallet=${wallet}&blockchians=${chain}&cache=true`
+        const portfolio = await axios.get(url, {
+            headers: {
+                'Authorization': process.env.MOBULA_API_KEY,
+            },
+        })
+        url = `https://api.mobula.io/api/1/wallet/history?wallet=${wallet}&blockchians=${chain}&cache=true`
+        const history = await axios.get(url, {
             headers: {
                 'Authorization': process.env.MOBULA_API_KEY,
             },
@@ -13,7 +19,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             success: true,
             message: 'Getting portfolio successfully!',
-            data: response.data
+            data: {
+                portfolio: portfolio.data,
+                history: history.data
+            }
         })
     } catch (e) {
         return NextResponse.json({

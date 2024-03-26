@@ -9,7 +9,7 @@ import {
   RainbowKitProvider,
   darkTheme
 } from '@rainbow-me/rainbowkit';
-import { WagmiProvider, createConfig, http } from 'wagmi';
+import { WagmiProvider } from 'wagmi';
 import {
   mainnet,
   polygon,
@@ -22,24 +22,12 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-const config = getDefaultConfig({
+export const config = getDefaultConfig({
   appName: 'Trial Task Yama',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: 'trial_task_yama',
   chains: [mainnet, polygon, optimism, arbitrum, base],
-  ssr: true, // If your dApp uses server side rendering (SSR)
+  ssr: true,
 });
-
-// const config = createConfig({
-//   chains: [mainnet, polygon, optimism, arbitrum, base],
-//   transports: {
-//     [mainnet.id]: http(),
-//     [polygon.id]: http(),
-//     [optimism.id]: http(),
-//     [arbitrum.id]: http(),
-//     [base.id]: http(),
-//   },
-// })
-
 
 interface ProvidersProps {
   children: React.ReactNode
