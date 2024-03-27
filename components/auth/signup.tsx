@@ -49,7 +49,6 @@ const SignUp = () => {
             description: res.data.message,
         })
         if (res.data.success) {
-            console.log(res.data.message)
             route.push('/auth/signin')
         }
         setLoading(false)

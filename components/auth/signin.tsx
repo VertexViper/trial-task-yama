@@ -43,7 +43,6 @@ const SignIn = () => {
             email: data.email,
             password: data.password,
         });
-        console.log(result)
         if (result?.ok) {
             router.push('/portfolio')
             toast({

@@ -13,12 +13,12 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <PrivateRoutes>
-      <section className="flex flex-col md:flex-row w-full">
+      <div className="flex flex-col md:flex-row w-full">
         <SideBar />
         <div className="w-full bg-gray-900 flex flex-col overflow-y-auto h-screen">
           {children}
         </div>
-      </section>
+      </div>
     </PrivateRoutes>
   )
 }

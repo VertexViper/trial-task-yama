@@ -10,7 +10,6 @@ interface PrivateRoutesProps {
 const PrivateRoutes = ({ children }:PrivateRoutesProps) => {
   const pathName = usePathname()
   const { status } = useSession()
-  console.log(pathName, status)
 
   if (pathName.toString().indexOf('auth')===-1 && status !== 'authenticated' && status !=='loading') {
     redirect('/auth')

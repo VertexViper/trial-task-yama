@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAccount, useDisconnect } from "wagmi"
+import { useAccount } from "wagmi"
 import axios from 'axios'
 import dynamic from 'next/dynamic'
 import Loader from "@/components/ui/loader";
@@ -23,7 +23,6 @@ const PortfolioTable = dynamic(() => import("@/components/portfolio/portfolioTab
 });
 const PortfolioPage = () => {
   const session = useSession()
-  const disconnect = useDisconnect()
   const { address, isConnected } = useAccount()
   const [balance, setBalance] = useState<number>(0)
   const [assets, setAssets] = useState<Array<any>>([])
@@ -98,7 +97,6 @@ const PortfolioPage = () => {
     }
   }
   const enableAnotherWallet = () => {
-    console.log(isEnableAnotherWallet)
     if (isEnableAnotherWallet) {
       getPortfolio(session.data?.user.wallet || '', 'ethereum')
     }
@@ -131,7 +129,6 @@ const PortfolioPage = () => {
         }
       })
     }
-    console.log(temp)
     if (temp.length>1 && temp[0].isConnected && !temp[1].isConnected) refreshSession()
   }, [address, isConnected])
   return (
