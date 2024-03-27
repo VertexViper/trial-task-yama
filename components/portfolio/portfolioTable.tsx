@@ -34,6 +34,7 @@ export type Payment = {
   amount: number
   crypto: string
   chain: string
+  usd: number
 }
 
 export const columns: ColumnDef<Payment>[] = [
@@ -48,6 +49,14 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "chain",
     header: 'Chain',
     cell: ({ row }) => <div className="lowercase">{row.getValue("chain")}</div>,
+  },
+  {
+    accessorKey: "usd",
+    header: () => <div className="text-right">USD</div>,
+    cell: ({ row }) => {
+      const usd = parseFloat(row.getValue("usd"))
+      return <div className="text-right font-medium">{`$ ${usd}`}</div>
+    },
   },
   {
     accessorKey: "amount",

@@ -46,7 +46,8 @@ const PortfolioPage = () => {
             id: asset.asset.id,
             amount: asset.token_balance,
             crypto: asset.asset.symbol,
-            chain: asset.asset.name
+            chain: asset.asset.name,
+            usd: asset.estimated_balance
           }
         })
         setAssets(tempAssets)
