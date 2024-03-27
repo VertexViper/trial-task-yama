@@ -112,7 +112,16 @@ const PortfolioPage = () => {
       getPortfolio(session.data?.user.wallet, 'ethereum')
     }
   }, [session.data?.user.wallet])
+  const [walletState, setWalletState] = useState<Array<any>>([])
   useEffect(() => {
+    let temp = [
+      {
+        address:address,
+        isConnected: isConnected
+      },
+      ...walletState
+    ]
+    setWalletState(temp)
     const refreshSession = async () => {
       await updateUserWallet()
       session.update({
@@ -122,13 +131,14 @@ const PortfolioPage = () => {
         }
       })
     }
-    if (isConnected && address) refreshSession()
+    console.log(temp)
+    if (temp.length>1 && temp[0].isConnected && !temp[1].isConnected) refreshSession()
   }, [address, isConnected])
   return (
     <>
       {loading && <div className='absolute w-full h-screen top-0 left-0 bg-[#00000090] z-50 flex items-center justify-center'><Loader /></div>}
       <div className={`${loading ? 'blur-sm' : ''}`}>
-        {!(session.data?.user as any)?.wallet && <div className='absolute flex items-center justify-center bg-black top-0 left-0 w-full h-screen'>
+        {!(session.data?.user as any)?.wallet && <div className='absolute flex items-center justify-center bg-black top-0 left-0 w-full h-screen gap-4'>
           <ConnectButton />
           <Button className="w-[120px] text-red-500 bg-gray-700" onClick={() => signOut({ callbackUrl: '/auth/signin' })}>Logout</Button>
         </div>
