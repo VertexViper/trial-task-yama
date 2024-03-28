@@ -215,7 +215,8 @@ const PortfolioPage = () => {
             {historyLoading && <Loader />}
           </div>
           <div className={`px-5`}>
-            <PortfolioTable data={assets} />
+            {!portFolioLoading && <PortfolioTable data={assets} />}
+            {portFolioLoading && <Loader />}
           </div>
         </div>}
       </div>
