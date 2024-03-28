@@ -51,8 +51,9 @@ const PortfolioPage = () => {
         })
         return
       }
+      console.log(response.data)
+
       if(response.data.error?.code ==='504'){
-        console.log(response.data.error)
         setPortFolioLoading(false)
         getPortfolio(wallet, chain)
         return
@@ -90,13 +91,13 @@ const PortfolioPage = () => {
         })
         return
       }
+      console.log(response.data)
       if(response.data.error?.code ==='504'){
-        console.log(response.data.error)
         setHistoryLoading(false)
         getHistory(wallet, chain)
         return
       }
-      let reducedData = histories.balance_history?.reduce((accaccumulator: any, currentValue: any) => {
+      let reducedData = histories?.balance_history?.reduce((accaccumulator: any, currentValue: any) => {
         const historyDate = new Date(currentValue[0]);
         const date = `${historyDate.getFullYear()}-${historyDate.getMonth() + 1}-${historyDate.getDate()}`;
         if (!accaccumulator[date]) {

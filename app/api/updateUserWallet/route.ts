@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     } catch (e) {
         return NextResponse.json({
             success: false,
-            message: 'Unable to create account',
+            message: 'Unable to update account',
             error: e
         })
     }
