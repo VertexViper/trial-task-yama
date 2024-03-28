@@ -51,7 +51,7 @@ const PortfolioPage = () => {
         })
         return
       }
-      if(response.data.data.portfolio.code){
+      if(response.data?.error?.code){
         setPortFolioLoading(false)
         getPortfolio(wallet, chain)
         return
@@ -82,15 +82,15 @@ const PortfolioPage = () => {
     if (response.data.success) {
       const histories = response.data.data.history.data
       if(response.data.data.history.error){
-        setLoading(false)
+        setHistoryLoading(false)
         toast({
           title: "Error",
           description: "Invalid wallet address",
         })
         return
       }
-      if(response.data.data.history.code){
-        setPortFolioLoading(false)
+      if(response.data?.error?.code){
+        setHistoryLoading(false)
         getHistory(wallet, chain)
         return
       }
