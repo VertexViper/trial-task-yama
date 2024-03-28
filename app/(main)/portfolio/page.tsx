@@ -24,7 +24,7 @@ const PortfolioTable = dynamic(() => import("@/components/portfolio/portfolioTab
 });
 const PortfolioPage = () => {
   const session = useSession()
-  const {toast} = useToast()
+  const { toast } = useToast()
   const { address, isConnected } = useAccount()
   const [balance, setBalance] = useState<number>(0)
   const [assets, setAssets] = useState<Array<any>>([])
@@ -35,89 +35,94 @@ const PortfolioPage = () => {
   const [portFolioLoading, setPortFolioLoading] = useState<boolean>(false)
   const [historyLoading, setHistoryLoading] = useState<boolean>(false)
   const getPortfolio = async (wallet: string, chain: string) => {
-    setPortFolioLoading(true)
-    const url = `/api/portfolio`
-    const response = await axios.post(url, {
-      wallet: wallet,
-      chain: chain
-    })
-    if (response.data.success) {
-      const portfolio = response.data.data.portfolio.data
-      if(response.data.data?.portfolio.error){
+    try {
+      setPortFolioLoading(true)
+      const url = `/api/portfolio`
+      const response = await axios.post(url, {
+        wallet: wallet,
+        chain: chain
+      })
+      if (response.data.success) {
+        const portfolio = response.data.data.portfolio.data
+        if (response.data.data?.portfolio.error) {
+          setPortFolioLoading(false)
+          toast({
+            title: "Error",
+            description: "Invalid wallet address",
+          })
+          return
+        }
+        setBalance(portfolio.total_wallet_balance ? portfolio.total_wallet_balance : 0)
+        if (portfolio.assets) {
+          let tempAssets = portfolio.assets.map((asset: any) => {
+            return {
+              id: asset.asset.id,
+              amount: asset.token_balance,
+              crypto: asset.asset.symbol,
+              chain: asset.asset.name,
+              usd: asset.estimated_balance
+            }
+          })
+          setAssets(tempAssets)
+        }
         setPortFolioLoading(false)
-        toast({
-          title: "Error",
-          description: "Invalid wallet address",
-        })
-        return
       }
-      console.log(response.data)
-
-      if(response.data.error?.code ==='504'){
-        setPortFolioLoading(false)
-        getPortfolio(wallet, chain)
-        return
-      }
-      setBalance(portfolio.total_wallet_balance ? portfolio.total_wallet_balance : 0)
-      if (portfolio.assets) {
-        let tempAssets = portfolio.assets.map((asset: any) => {
-          return {
-            id: asset.asset.id,
-            amount: asset.token_balance,
-            crypto: asset.asset.symbol,
-            chain: asset.asset.name,
-            usd: asset.estimated_balance
-          }
-        })
-        setAssets(tempAssets)
-      }
+    } catch (e) {
       setPortFolioLoading(false)
+      getPortfolio(wallet, chain)
+      // toast({
+      //   title: "Error",
+      //   description: "API call takes long ... Please refresh the page",
+      // })
     }
   }
   const getHistory = async (wallet: string, chain: string) => {
-    setHistoryLoading(true)
-    const url = `/api/history`
-    const response = await axios.post(url, {
-      wallet: wallet,
-      chain: chain
-    })
-    if (response.data.success) {
-      const histories = response.data.data.history.data
-      if(response.data.data?.history.error){
-        setHistoryLoading(false)
-        toast({
-          title: "Error",
-          description: "Invalid wallet address",
-        })
-        return
-      }
-      console.log(response.data)
-      if(response.data.error?.code ==='504'){
-        setHistoryLoading(false)
-        getHistory(wallet, chain)
-        return
-      }
-      let reducedData = histories?.balance_history?.reduce((accaccumulator: any, currentValue: any) => {
-        const historyDate = new Date(currentValue[0]);
-        const date = `${historyDate.getFullYear()}-${historyDate.getMonth() + 1}-${historyDate.getDate()}`;
-        if (!accaccumulator[date]) {
-          accaccumulator[date] = {
-            name: date,
-            count: 1,
-            totalAmount: currentValue[1],
-          };
-        } else {
-          accaccumulator[date].totalAmount += currentValue[1];
-          accaccumulator[date].count += 1;
+    try {
+      setHistoryLoading(true)
+      const url = `/api/history`
+      const response = await axios.post(url, {
+        wallet: wallet,
+        chain: chain
+      })
+      if (response.data.success) {
+        const histories = response.data.data.history.data
+        if (response.data.data?.history.error) {
+          setHistoryLoading(false)
+          toast({
+            title: "Error",
+            description: "Invalid wallet address",
+          })
+          return
         }
-        return accaccumulator;
-      }, {});
-      let graphData = reducedData ? Object?.values(reducedData).map((item: any) => ({
-        name: item.name,
-        uv: item.totalAmount / item.count,
-      })) : [];
-      setHistory(graphData)
+        let reducedData = histories?.balance_history?.reduce((accaccumulator: any, currentValue: any) => {
+          const historyDate = new Date(currentValue[0]);
+          const date = `${historyDate.getFullYear()}-${historyDate.getMonth() + 1}-${historyDate.getDate()}`;
+          if (!accaccumulator[date]) {
+            accaccumulator[date] = {
+              name: date,
+              count: 1,
+              totalAmount: currentValue[1],
+            };
+          } else {
+            accaccumulator[date].totalAmount += currentValue[1];
+            accaccumulator[date].count += 1;
+          }
+          return accaccumulator;
+        }, {});
+        let graphData = reducedData ? Object?.values(reducedData).map((item: any) => ({
+          name: item.name,
+          uv: item.totalAmount / item.count,
+        })) : [];
+        setHistory(graphData)
+        setHistoryLoading(false)
+      }
+    } catch (e) {
       setHistoryLoading(false)
+      getHistory(wallet, chain)
+      // toast({
+      //   title: "Error",
+      //   description: "API call takes long... Please refresh the page",
+      // })
     }
   }
   const updateUserWallet = async () => {
@@ -162,7 +167,7 @@ const PortfolioPage = () => {
   useEffect(() => {
     let temp = [
       {
-        address:address,
+        address: address,
         isConnected: isConnected
       },
       ...walletState
@@ -177,7 +182,7 @@ const PortfolioPage = () => {
         }
       })
     }
-    if (temp.length>1 && temp[0].isConnected && !temp[1].isConnected) refreshSession()
+    if (temp.length > 1 && temp[0].isConnected && !temp[1].isConnected) refreshSession()
   }, [address, isConnected])
   return (
     <>

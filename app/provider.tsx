@@ -24,7 +24,7 @@ import {
 
 export const config = getDefaultConfig({
   appName: 'Trial Task Yama',
-  projectId: 'trial_task_yama',
+  projectId: '958524c46386411f8104c19bcd8f2903',
   chains: [mainnet, polygon, optimism, arbitrum, base],
   ssr: true,
 });
