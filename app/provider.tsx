@@ -23,8 +23,8 @@ import {
 } from "@tanstack/react-query";
 
 export const config = getDefaultConfig({
-  appName: 'Trial Task Yama',
-  projectId: '958524c46386411f8104c19bcd8f2903',
+  appName: 'trial-task-yama',
+  projectId: '1ee65914-030b-4b6a-9ca7-9b5e9fad5d74=a757d560c083e67abba1c79e3f2d61b3c4e39907ac583aac3523ad7bf2058175',
   chains: [mainnet, polygon, optimism, arbitrum, base],
   ssr: true,
 });
