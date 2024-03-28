@@ -10,7 +10,7 @@ import Loader from '@/components/ui/loader'
 
 // const provider = new InfuraProvider(1, "958524c46386411f8104c19bcd8f2903")
 
-const UniswapWidgetDynamic = dynamic(() => import("@/components/portfolio/portfolioInfo"), {
+const UniswapWidgetDynamic = dynamic(() => import("@/components/swap/swap"), {
   loading: () => <Loader size={100} />,
   ssr: false,
 });
