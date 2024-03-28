@@ -8,9 +8,6 @@ dependencies:
   '@cfx-kit/wallet-avatar':
     specifier: ^0.0.5
     version: 0.0.5
-  '@ethersproject/providers':
-    specifier: ^5.7.2
-    version: 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.51.2)
@@ -67,7 +64,7 @@ dependencies:
     version: 2.1.0
   jotai-immer:
     specifier: ^0.3.0
-    version: 0.3.0(immer@10.0.4)(jotai@2.7.1)(react@18.2.0)
+    version: 0.3.0(immer@9.0.21)(jotai@2.7.1)(react@18.2.0)
   lucide-react:
     specifier: ^0.359.0
     version: 0.359.0(react@18.2.0)
@@ -112,7 +109,7 @@ dependencies:
     version: 2.9.4(typescript@5.4.3)
   wagmi:
     specifier: ^2.5.12
-    version: 2.5.13(@tanstack/react-query@5.28.9)(@types/react@18.2.73)(immer@10.0.4)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
+    version: 2.5.13(@tanstack/react-query@5.28.9)(@types/react@18.2.73)(immer@9.0.21)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
   walletconnect:
     specifier: ^1.7.8
     version: 1.7.8(@babel/core@7.24.3)
@@ -3878,7 +3875,7 @@ packages:
       react-remove-scroll: 2.5.7(@types/react@18.2.73)(react@18.2.0)
       ua-parser-js: 1.0.37
       viem: 2.9.4(typescript@5.4.3)
-      wagmi: 2.5.13(@tanstack/react-query@5.28.9)(@types/react@18.2.73)(immer@10.0.4)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
+      wagmi: 2.5.13(@tanstack/react-query@5.28.9)(@types/react@18.2.73)(immer@9.0.21)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -5387,7 +5384,7 @@ packages:
       '@metamask/sdk': 0.14.3(@types/react@18.2.73)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
       '@safe-global/safe-apps-provider': 0.18.1(typescript@5.4.3)
       '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.4.3)
-      '@wagmi/core': 2.6.10(@types/react@18.2.73)(immer@10.0.4)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
+      '@wagmi/core': 2.6.10(@types/react@18.2.73)(immer@9.0.21)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
       '@walletconnect/ethereum-provider': 2.11.2(@types/react@18.2.73)(react@18.2.0)
       '@walletconnect/modal': 2.6.2(@types/react@18.2.73)(react@18.2.0)
       typescript: 5.4.3
@@ -5419,7 +5416,7 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@2.6.10(@types/react@18.2.73)(immer@10.0.4)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4):
+  /@wagmi/core@2.6.10(@types/react@18.2.73)(immer@9.0.21)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4):
     resolution: {integrity: sha512-CwY6T5MZgvhahNltArxVUpeh9Fk+zPeumqXyA+MIB0bdudOaxw0BjHyUOWGwcE8BH+uzT8YuTigeFVW3sKecVg==}
     peerDependencies:
       '@tanstack/query-core': '>=5.0.0'
@@ -5435,7 +5432,7 @@ packages:
       mipd: 0.0.5(typescript@5.4.3)
       typescript: 5.4.3
       viem: 2.9.4(typescript@5.4.3)
-      zustand: 4.4.1(@types/react@18.2.73)(immer@10.0.4)(react@18.2.0)
+      zustand: 4.4.1(@types/react@18.2.73)(immer@9.0.21)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
       - bufferutil
@@ -9733,10 +9730,6 @@ packages:
     resolution: {integrity: sha512-HR7EVodfFUdQCTIeySw+WDRFJlPcLOJbXfwwZ7Oom6tjsvZ3bOkCDJHehQC3nxJrv7+f9XecwazynjU8e4Vw3Q==}
     dev: false
 
-  /immer@10.0.4:
-    resolution: {integrity: sha512-cuBuGK40P/sk5IzWa9QPUaAdvPHjkk1c+xYsd9oZw+YQQEV+10G0P5uMpGctZZKnyQ+ibRO08bD25nWLmYi2pw==}
-    dev: false
-
   /immer@9.0.21:
     resolution: {integrity: sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==}
     dev: false
@@ -10250,14 +10243,14 @@ packages:
     resolution: {integrity: sha512-jc7BFxgKPKi94uOvEmzlSWFFe2+vASyXaKUpdQKatWAESU2MWjDfFf0fdfc83CDKcA5QecabZeNLyfhe3yKNkg==}
     dev: false
 
-  /jotai-immer@0.3.0(immer@10.0.4)(jotai@2.7.1)(react@18.2.0):
+  /jotai-immer@0.3.0(immer@9.0.21)(jotai@2.7.1)(react@18.2.0):
     resolution: {integrity: sha512-k+o4rWfWWLyHfucHAdoiN+l8flxMrKC/bEFvJA98znj+kbPW5R90EPa1u8mhWLJTABW3xjAp7Z3kyD3FVi0Hgw==}
     peerDependencies:
       immer: '*'
       jotai: '>=2.0.0'
       react: '>=17.0.0'
     dependencies:
-      immer: 10.0.4
+      immer: 9.0.21
       jotai: 2.7.1(@types/react@18.2.73)(react@18.2.0)
       react: 18.2.0
     dev: false
@@ -10303,7 +10296,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.24.3
-      jotai-immer: 0.3.0(immer@10.0.4)(jotai@2.7.1)(react@18.2.0)
+      jotai-immer: 0.3.0(immer@9.0.21)(jotai@2.7.1)(react@18.2.0)
       react: 18.2.0
     dev: false
 
@@ -14657,7 +14650,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /wagmi@2.5.13(@tanstack/react-query@5.28.9)(@types/react@18.2.73)(immer@10.0.4)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4):
+  /wagmi@2.5.13(@tanstack/react-query@5.28.9)(@types/react@18.2.73)(immer@9.0.21)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4):
     resolution: {integrity: sha512-0+38DUGfLqwrzYx9Aza5ed+v2pO1qKN04egrcICaH4ff1N0Nj3iGlPBZ7HHyu+20r8qEKXIkW//6TPQMlc64YQ==}
     peerDependencies:
       '@tanstack/react-query': '>=5.0.0'
@@ -14670,7 +14663,7 @@ packages:
     dependencies:
       '@tanstack/react-query': 5.28.9(react@18.2.0)
       '@wagmi/connectors': 4.1.19(@types/react@18.2.73)(@wagmi/core@2.6.10)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
-      '@wagmi/core': 2.6.10(@types/react@18.2.73)(immer@10.0.4)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
+      '@wagmi/core': 2.6.10(@types/react@18.2.73)(immer@9.0.21)(react@18.2.0)(typescript@5.4.3)(viem@2.9.4)
       react: 18.2.0
       typescript: 5.4.3
       use-sync-external-store: 1.2.0(react@18.2.0)
@@ -15237,7 +15230,7 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /zustand@4.4.1(@types/react@18.2.73)(immer@10.0.4)(react@18.2.0):
+  /zustand@4.4.1(@types/react@18.2.73)(immer@9.0.21)(react@18.2.0):
     resolution: {integrity: sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -15253,7 +15246,7 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.73
-      immer: 10.0.4
+      immer: 9.0.21
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false

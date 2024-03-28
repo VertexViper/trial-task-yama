@@ -1,11 +1,17 @@
-'use client'
+"use client"
 
 import { SwapWidget, Theme } from '@uniswap/widgets'
 import '@uniswap/widgets/fonts.css'
-import { JSON_RPC_URL } from '@/utils/constants'
-import { InfuraProvider } from "@ethersproject/providers"
+import { useEffect } from 'react'
+import dynamic from 'next/dynamic'
+// import { JSON_RPC_URL } from '@/utils/constants'
+// import { InfuraProvider } from "@ethersproject/providers"
 
-const provider = new InfuraProvider(1, "958524c46386411f8104c19bcd8f2903")
+// const provider = new InfuraProvider(1, "958524c46386411f8104c19bcd8f2903")
+
+const UniswapWidgetDynamic = dynamic(() => import('@/components/swap/swap'), {
+  ssr: false,
+});
 
 const SwapPage = () => {
   const theme: Theme = {
@@ -19,15 +25,17 @@ const SwapPage = () => {
     dialog: '#000',
     fontFamily: 'Josefin Sans',
   }
-
+  useEffect(()=>{},[])
   return (
     <>
       <div className="p-5 flex flex-col">
         <div className={`flex justify-around items-center w-full gap-4 py-8`}>
-          <SwapWidget
-            provider={provider}
-            jsonRpcUrlMap={JSON_RPC_URL}
-          />
+          {/* <SwapWidget
+            theme={theme}
+            // provider={provider}
+            // jsonRpcUrlMap={JSON_RPC_URL}
+          /> */}
+          <UniswapWidgetDynamic />
         </div>
       </div>
     </>
