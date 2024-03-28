@@ -51,7 +51,8 @@ const PortfolioPage = () => {
         })
         return
       }
-      if(response.data.error){
+      if(response.data.error?.code ==='504'){
+        console.log(response.data.error)
         setPortFolioLoading(false)
         getPortfolio(wallet, chain)
         return
@@ -89,7 +90,8 @@ const PortfolioPage = () => {
         })
         return
       }
-      if(response.data.error){
+      if(response.data.error?.code ==='504'){
+        console.log(response.data.error)
         setHistoryLoading(false)
         getHistory(wallet, chain)
         return

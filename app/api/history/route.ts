@@ -4,7 +4,7 @@ import axios from 'axios'
 export async function POST(req: NextRequest) {
     try {
         const { wallet, chain } = await req.json();
-        let url = `https://api.mobula.io/api/1/wallet/history?wallet=${wallet}&blockchians=${chain}&cache=true`
+        let url = `https://api.mobula.io/api/1/wallet/history?wallet=${wallet}&blockchains=${chain}&cache=true`
         const history = await axios.get(url, {
             headers: {
                 'Authorization': process.env.MOBULA_API_KEY,
