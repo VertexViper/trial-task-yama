@@ -24,9 +24,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Loader from "../ui/loader"
 
 interface PortfolioTableProps {
   data: Payment[]
+  loading: boolean
 }
 
 export type Payment = {
@@ -68,7 +70,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ]
 
-const PortfolioTable = ({data}:PortfolioTableProps) =>{
+const PortfolioTable = ({data, loading}:PortfolioTableProps) =>{
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -128,6 +130,7 @@ const PortfolioTable = ({data}:PortfolioTableProps) =>{
               </TableRow>
             ))}
           </TableHeader>
+          {loading && <div className="py-5 flex w-full items-center justify-center w-full"><Loader size={50} /></div>}
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (

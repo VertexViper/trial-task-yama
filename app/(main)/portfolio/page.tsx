@@ -14,13 +14,13 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 
 const PortfolioInfo = dynamic(() => import("@/components/portfolio/portfolioInfo"), {
-  loading: () => <Loader />,
+  loading: () => <Loader size={50} />,
 });
 const PortfolioGraph = dynamic(() => import("@/components/portfolio/portfolioGraph"), {
   loading: () => <Loader />,
 });
 const PortfolioTable = dynamic(() => import("@/components/portfolio/portfolioTable"), {
-  loading: () => <Loader />,
+  loading: () => <div className='flex items-center justify-center w-full'><Loader size={80} /></div>,
 });
 const PortfolioPage = () => {
   const session = useSession()
@@ -43,7 +43,7 @@ const PortfolioPage = () => {
     })
     if (response.data.success) {
       const portfolio = response.data.data.portfolio.data
-      if(response.data.data.portfolio.error){
+      if(response.data.data?.portfolio.error){
         setPortFolioLoading(false)
         toast({
           title: "Error",
@@ -51,7 +51,7 @@ const PortfolioPage = () => {
         })
         return
       }
-      if(response.data?.error?.code){
+      if(response.data.error){
         setPortFolioLoading(false)
         getPortfolio(wallet, chain)
         return
@@ -81,7 +81,7 @@ const PortfolioPage = () => {
     })
     if (response.data.success) {
       const histories = response.data.data.history.data
-      if(response.data.data.history.error){
+      if(response.data.data?.history.error){
         setHistoryLoading(false)
         toast({
           title: "Error",
@@ -89,7 +89,7 @@ const PortfolioPage = () => {
         })
         return
       }
-      if(response.data?.error?.code){
+      if(response.data.error){
         setHistoryLoading(false)
         getHistory(wallet, chain)
         return
@@ -187,10 +187,11 @@ const PortfolioPage = () => {
         }
         {(session.data?.user as any)?.wallet && <div className='py-8 px-5'>
           <div className='flex flex-col lg:flex-row  justify-around items-center w-full gap-4'>
-            {!portFolioLoading && <div className='flex flex-col'>
+            <div className='flex flex-col'>
               <PortfolioInfo
                 total_wallet_balance={balance}
                 address={session.data?.user.wallet || ''}
+                loading={portFolioLoading}
               />
               <div className="flex flex-col space-y-2 mt-3">
                 <div className="flex items-center space-x-2">
@@ -207,16 +208,14 @@ const PortfolioPage = () => {
                   <Button className='bg-blue-700 hover:bg-blue-800' disabled={!isEnableAnotherWallet} onClick={() => getAnotherPortfolio()}>Get Portfolio</Button>
                 </div>
               </div>
-            </div>}
-            {portFolioLoading && <Loader />}
+            </div>
             {!historyLoading && <PortfolioGraph
               data={history}
             />}
             {historyLoading && <Loader />}
           </div>
           <div className={`px-5`}>
-            {!portFolioLoading && <PortfolioTable data={assets} />}
-            {portFolioLoading && <Loader />}
+            <PortfolioTable data={assets} loading={portFolioLoading} />
           </div>
         </div>}
       </div>
