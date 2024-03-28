@@ -1,9 +1,12 @@
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-const Loader = () => {
+interface LoaderProps {
+    size?: number
+}
+const Loader = ({size = 100}:LoaderProps) => {
     return (
-        <div className="flex w-[100px] h-[100px] items-center justify-center rounded-full bg-background-secondary">
-            <ReloadIcon className="animate-spin text-white w-[100px] h-[100px]" />
+        <div className={`flex w-[${size}px] h-[${size}px] items-center justify-center rounded-full bg-background-secondary`}>
+            <ReloadIcon className={`animate-spin text-white w-[${size}px] h-[${size}px]`} />
         </div>
     )
 }
