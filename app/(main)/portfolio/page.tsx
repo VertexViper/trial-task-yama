@@ -41,6 +41,9 @@ const PortfolioPage = () => {
       const response = await axios.post(url, {
         wallet: wallet,
         chain: chain
+      },
+      {
+        timeout: 20000 // Timeout in milliseconds (5000ms = 5 seconds)
       })
       if (response.data.success) {
         const portfolio = response.data.data.portfolio.data
@@ -72,7 +75,7 @@ const PortfolioPage = () => {
       // getPortfolio(wallet, chain)
       toast({
         title: "Error",
-        description: "Mobula API call takes long ... Please refresh the page",
+        description: "Mobula API call takes long ... Getting portfolio failed. Please refresh the page",
       })
     }
   }
@@ -83,6 +86,9 @@ const PortfolioPage = () => {
       const response = await axios.post(url, {
         wallet: wallet,
         chain: chain
+      },
+      {
+        timeout: 20000 // Timeout in milliseconds (5000ms = 5 seconds)
       })
       if (response.data.success) {
         const histories = response.data.data.history.data
@@ -121,7 +127,7 @@ const PortfolioPage = () => {
       // getHistory(wallet, chain)
       toast({
         title: "Error",
-        description: "Mobula API call takes long... Please refresh the page",
+        description: "Mobula API call takes long... Getting history for graph failed. Please refresh the page",
       })
     }
   }
