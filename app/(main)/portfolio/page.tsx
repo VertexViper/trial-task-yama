@@ -51,6 +51,11 @@ const PortfolioPage = () => {
         })
         return
       }
+      if(response.data.data.portfolio.code){
+        setPortFolioLoading(false)
+        getPortfolio(wallet, chain)
+        return
+      }
       setBalance(portfolio.total_wallet_balance ? portfolio.total_wallet_balance : 0)
       if (portfolio.assets) {
         let tempAssets = portfolio.assets.map((asset: any) => {
@@ -82,6 +87,11 @@ const PortfolioPage = () => {
           title: "Error",
           description: "Invalid wallet address",
         })
+        return
+      }
+      if(response.data.data.history.code){
+        setPortFolioLoading(false)
+        getHistory(wallet, chain)
         return
       }
       let reducedData = histories.balance_history?.reduce((accaccumulator: any, currentValue: any) => {
