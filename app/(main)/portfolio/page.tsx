@@ -69,11 +69,11 @@ const PortfolioPage = () => {
       }
     } catch (e) {
       setPortFolioLoading(false)
-      getPortfolio(wallet, chain)
-      // toast({
-      //   title: "Error",
-      //   description: "API call takes long ... Please refresh the page",
-      // })
+      // getPortfolio(wallet, chain)
+      toast({
+        title: "Error",
+        description: "Mobula API call takes long ... Please refresh the page",
+      })
     }
   }
   const getHistory = async (wallet: string, chain: string) => {
@@ -118,11 +118,11 @@ const PortfolioPage = () => {
       }
     } catch (e) {
       setHistoryLoading(false)
-      getHistory(wallet, chain)
-      // toast({
-      //   title: "Error",
-      //   description: "API call takes long... Please refresh the page",
-      // })
+      // getHistory(wallet, chain)
+      toast({
+        title: "Error",
+        description: "Mobula API call takes long... Please refresh the page",
+      })
     }
   }
   const updateUserWallet = async () => {
