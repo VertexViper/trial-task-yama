@@ -26,7 +26,7 @@ const SwapPage = () => {
         <div className={`flex justify-around items-center w-full gap-4 py-8`}>
           <SwapWidget
             provider={provider}
-            jsonRpcEndpoint={JSON_RPC_URL}
+            jsonRpcUrlMap={JSON_RPC_URL}
           />
         </div>
       </div>

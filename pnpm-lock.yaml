@@ -8,6 +8,9 @@ dependencies:
   '@cfx-kit/wallet-avatar':
     specifier: ^0.0.5
     version: 0.0.5
+  '@ethersproject/providers':
+    specifier: ^5.7.2
+    version: 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.51.2)
@@ -13110,7 +13113,7 @@ packages:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
     hasBin: true
     dependencies:
-      glob: 7.2.0
+      glob: 7.2.3
     dev: false
 
   /rimraf@3.0.2:
