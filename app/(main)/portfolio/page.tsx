@@ -31,7 +31,6 @@ const PortfolioPage = () => {
   const [history, setHistory] = useState<Array<any>>([])
   const [isEnableAnotherWallet, setIsEnableAnotherWallet] = useState<boolean>(false)
   const [anotherAddress, setAnotherAddress] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
   const [portFolioLoading, setPortFolioLoading] = useState<boolean>(false)
   const [historyLoading, setHistoryLoading] = useState<boolean>(false)
   const getPortfolio = async (wallet: string, chain: string) => {
@@ -72,6 +71,8 @@ const PortfolioPage = () => {
       }
     } catch (e) {
       setPortFolioLoading(false)
+      setAssets([])
+      setBalance(0)
       // getPortfolio(wallet, chain)
       toast({
         title: "Error",
@@ -124,6 +125,7 @@ const PortfolioPage = () => {
       }
     } catch (e) {
       setHistoryLoading(false)
+      setHistory([])
       // getHistory(wallet, chain)
       toast({
         title: "Error",
