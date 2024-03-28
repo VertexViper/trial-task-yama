@@ -22,7 +22,7 @@ const PortfolioGraph = ({data}:PortflioGraphProps) => {
                         }}
                     >
                         <XAxis dataKey="name" tickLine={false} tick={{ fontSize: 0 }} />
-                        <YAxis dataKey="uv"tickLine={false} />
+                        <YAxis dataKey="uv" tickLine={false} />
                         <Tooltip />
                         <Area type="monotone" dataKey="uv" stroke="#FF0000" fill="#FF000060" />
                     </AreaChart>

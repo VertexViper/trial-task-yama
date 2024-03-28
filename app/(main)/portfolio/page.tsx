@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from '@/components/ui/button'
+import { useToast } from '@/components/ui/use-toast'
 
 const PortfolioInfo = dynamic(() => import("@/components/portfolio/portfolioInfo"), {
   loading: () => <Loader />,
@@ -23,6 +24,7 @@ const PortfolioTable = dynamic(() => import("@/components/portfolio/portfolioTab
 });
 const PortfolioPage = () => {
   const session = useSession()
+  const {toast} = useToast()
   const { address, isConnected } = useAccount()
   const [balance, setBalance] = useState<number>(0)
   const [assets, setAssets] = useState<Array<any>>([])
@@ -30,8 +32,10 @@ const PortfolioPage = () => {
   const [isEnableAnotherWallet, setIsEnableAnotherWallet] = useState<boolean>(false)
   const [anotherAddress, setAnotherAddress] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const [portFolioLoading, setPortFolioLoading] = useState<boolean>(false)
+  const [historyLoading, setHistoryLoading] = useState<boolean>(false)
   const getPortfolio = async (wallet: string, chain: string) => {
-    setLoading(true)
+    setPortFolioLoading(true)
     const url = `/api/portfolio`
     const response = await axios.post(url, {
       wallet: wallet,
@@ -39,6 +43,14 @@ const PortfolioPage = () => {
     })
     if (response.data.success) {
       const portfolio = response.data.data.portfolio.data
+      if(response.data.data.portfolio.error){
+        setPortFolioLoading(false)
+        toast({
+          title: "Error",
+          description: "Invalid wallet address",
+        })
+        return
+      }
       setBalance(portfolio.total_wallet_balance ? portfolio.total_wallet_balance : 0)
       if (portfolio.assets) {
         let tempAssets = portfolio.assets.map((asset: any) => {
@@ -52,7 +64,26 @@ const PortfolioPage = () => {
         })
         setAssets(tempAssets)
       }
+      setPortFolioLoading(false)
+    }
+  }
+  const getHistory = async (wallet: string, chain: string) => {
+    setHistoryLoading(true)
+    const url = `/api/history`
+    const response = await axios.post(url, {
+      wallet: wallet,
+      chain: chain
+    })
+    if (response.data.success) {
       const histories = response.data.data.history.data
+      if(response.data.data.history.error){
+        setLoading(false)
+        toast({
+          title: "Error",
+          description: "Invalid wallet address",
+        })
+        return
+      }
       let reducedData = histories.balance_history?.reduce((accaccumulator: any, currentValue: any) => {
         const historyDate = new Date(currentValue[0]);
         const date = `${historyDate.getFullYear()}-${historyDate.getMonth() + 1}-${historyDate.getDate()}`;
@@ -73,7 +104,7 @@ const PortfolioPage = () => {
         uv: item.totalAmount / item.count,
       })) : [];
       setHistory(graphData)
-      setLoading(false)
+      setHistoryLoading(false)
     }
   }
   const updateUserWallet = async () => {
@@ -100,15 +131,18 @@ const PortfolioPage = () => {
   const enableAnotherWallet = () => {
     if (isEnableAnotherWallet) {
       getPortfolio(session.data?.user.wallet || '', 'ethereum')
+      getHistory(session.data?.user.wallet || '', 'ethereum')
     }
     setIsEnableAnotherWallet(!isEnableAnotherWallet)
   }
   const getAnotherPortfolio = () => {
-    getPortfolio(anotherAddress, 'ethereum')
+    getPortfolio(anotherAddress || '', 'ethereum')
+    getHistory(anotherAddress || '', 'ethereum')
   }
   useEffect(() => {
     if (session.data?.user.wallet) {
-      getPortfolio(session.data?.user.wallet, 'ethereum')
+      getPortfolio(session.data?.user.wallet || '', 'ethereum')
+      getHistory(session.data?.user.wallet || '', 'ethereum')
     }
   }, [session.data?.user.wallet])
   const [walletState, setWalletState] = useState<Array<any>>([])
@@ -134,8 +168,8 @@ const PortfolioPage = () => {
   }, [address, isConnected])
   return (
     <>
-      {loading && <div className='absolute w-full h-screen top-0 left-0 bg-[#00000090] z-50 flex items-center justify-center'><Loader /></div>}
-      <div className={`${loading ? 'blur-sm' : ''}`}>
+      {/* {loading && <div className='absolute w-full h-screen top-0 left-0 bg-[#00000090] z-50 flex items-center justify-center'><Loader /></div>} */}
+      <div>
         {!(session.data?.user as any)?.wallet && <div className='absolute flex items-center justify-center bg-black top-0 left-0 w-full h-screen gap-4'>
           <ConnectButton />
           <Button className="w-[120px] text-red-500 bg-gray-700" onClick={() => signOut({ callbackUrl: '/auth/signin' })}>Logout</Button>
@@ -143,7 +177,7 @@ const PortfolioPage = () => {
         }
         {(session.data?.user as any)?.wallet && <div className='py-8 px-5'>
           <div className='flex flex-col lg:flex-row  justify-around items-center w-full gap-4'>
-            <div className='flex flex-col'>
+            {!portFolioLoading && <div className='flex flex-col'>
               <PortfolioInfo
                 total_wallet_balance={balance}
                 address={session.data?.user.wallet || ''}
@@ -160,13 +194,15 @@ const PortfolioPage = () => {
                 </div>
                 <div className='flex items-center gap-3'>
                   <Input id="walletAddress" className="text-white bg-gray-800" placeholder="Another Wallet" autoComplete="off" disabled={!isEnableAnotherWallet} value={anotherAddress} onChange={(e) => setAnotherAddress(e.target.value)} />
-                  <Button className='bg-blue-700 hover:bg-blue-800' onClick={() => getAnotherPortfolio()}>Get Portfolio</Button>
+                  <Button className='bg-blue-700 hover:bg-blue-800' disabled={!isEnableAnotherWallet} onClick={() => getAnotherPortfolio()}>Get Portfolio</Button>
                 </div>
               </div>
-            </div>
-            <PortfolioGraph
+            </div>}
+            {portFolioLoading && <Loader />}
+            {!historyLoading && <PortfolioGraph
               data={history}
-            />
+            />}
+            {historyLoading && <Loader />}
           </div>
           <div className={`px-5`}>
             <PortfolioTable data={assets} />
